@@ -41,7 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         className="text-white flex flex-col font-sans"
         style={{ background: '#020205', minHeight: '100dvh' }}
       >
-        <main className="flex-1 flex flex-col">{children}</main>
+        <main className="flex-1 flex flex-col w-full">{children}</main>
       </body>
     </html>
   )

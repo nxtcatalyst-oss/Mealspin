@@ -38,8 +38,8 @@ export default function HomePage() {
     const observer = new ResizeObserver(([entry]) => {
       const w = entry.contentRect.width
       const h = entry.contentRect.height
-      // Subtract 26px for the pointer arrow that extends above the wheel SVG
-      setWheelSize(Math.min(Math.floor(w), Math.floor(h) - 26, 400))
+      // Subtract 26px for pointer + 40px to prevent glow from bleeding into button
+      setWheelSize(Math.min(Math.floor(w), Math.floor(h) - 66, 400))
     })
     observer.observe(el)
     return () => observer.disconnect()
@@ -201,19 +201,13 @@ export default function HomePage() {
       />
 
       <div
-        className="flex-1 w-full max-w-lg mx-auto self-center px-4 pb-8 flex flex-col"
+        className="flex-1 w-full max-w-lg mx-auto px-4 pb-8 flex flex-col"
         style={{ paddingTop: 'max(1.5rem, env(safe-area-inset-top))', minHeight: '100dvh' }}
       >
         {/* Title */}
-        <div className="text-center mb-4">
-          <p
-            className="text-xs font-semibold tracking-[0.25em] font-display uppercase mb-2"
-            style={{ color: 'rgba(251,133,0,0.55)' }}
-          >
-            What&apos;s for dinner?
-          </p>
+        <div className="mb-4">
           <h1
-            className="font-black leading-tight font-display tracking-tight text-gradient-gold"
+            className="font-black leading-tight font-display tracking-tight text-gradient-gold text-center"
             style={{ fontSize: 'clamp(1.875rem, 8vw, 3.25rem)' }}
           >
             Spin to Decide
@@ -240,20 +234,21 @@ export default function HomePage() {
             </div>
 
             {/* Wheel */}
-            <div className="flex-1 flex flex-col items-center justify-center min-h-[220px] mt-4 mb-0 w-full">
-              <div ref={wheelContainerRef} className="w-full h-full flex items-center justify-center">
-                {wheelSize > 0 && (
-                  <SpinWheel
-                    ref={wheelRef}
-                    spinning={spinning}
-                    size={wheelSize}
-                  />
-                )}
-              </div>
+            <div
+              ref={wheelContainerRef}
+              className="flex-1 flex items-center justify-center min-h-[220px] mt-4 w-full"
+            >
+              {wheelSize > 0 && (
+                <SpinWheel
+                  ref={wheelRef}
+                  spinning={spinning}
+                  size={wheelSize}
+                />
+              )}
             </div>
 
             {/* Gap between wheel and button */}
-            <div className="h-10" />
+            <div className="h-20" />
 
             {/* Spin button */}
             <div className="flex flex-col items-center gap-4 mb-4">

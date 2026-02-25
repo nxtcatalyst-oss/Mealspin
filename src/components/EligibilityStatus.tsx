@@ -29,42 +29,43 @@ export default function EligibilityStatus({
     )
   }
 
-  const { eligibleMeals, blockedMeals, totalEnabled } = eligibilityResult
+  const { eligibleMeals, blockedMeals } = eligibilityResult
   const eligibleCount = eligibleMeals.length
   const blockedCount = blockedMeals.length
 
   return (
-    <div className="relative flex flex-col sm:flex-row items-center gap-4 justify-center">
+    <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: '12px' }}>
       {/* Status pill */}
       <div
-        className="flex items-center gap-2.5 px-4 py-1.5 rounded-full text-sm font-display font-medium"
+        className="font-display font-medium text-sm"
         style={{
-          background: 'rgba(255,255,255,0.04)',
-          border: '1px solid rgba(255,255,255,0.08)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          padding: '6px 16px',
+          borderRadius: '9999px',
+          whiteSpace: 'nowrap',
+          width: 'fit-content',
+          background: 'rgba(255,255,255,0.06)',
+          border: '1px solid rgba(255,255,255,0.12)',
         }}
       >
-        <span className="flex items-center gap-1">
-          <span className="font-bold text-green-400/90">{eligibleCount}</span>
-          <span className="text-white/40">eligible</span>
-        </span>
+        <span style={{ fontWeight: 700, color: '#4ade80' }}>{eligibleCount}</span>
+        <span style={{ color: 'rgba(255,255,255,0.5)' }}>eligible</span>
 
         {blockedCount > 0 && (
           <>
-            <span className="text-white/15">·</span>
-            <span className="flex items-center gap-1" title={`${blockedCount} meals on cooldown (${cooldownDays}d)`}>
-              <span className="font-semibold text-gold-300">{blockedCount}</span>
-              <span className="text-white/40">cooldown</span>
-            </span>
+            <span style={{ color: 'rgba(255,255,255,0.25)' }}>·</span>
+            <span style={{ fontWeight: 600, color: '#fbbf24' }} title={`${blockedCount} meals on cooldown (${cooldownDays}d)`}>{blockedCount}</span>
+            <span style={{ color: 'rgba(255,255,255,0.5)' }}>cooldown</span>
           </>
         )}
 
         {sessionRejectedCount > 0 && (
           <>
-            <span className="text-white/15">·</span>
-            <span className="flex items-center gap-1">
-              <span className="font-semibold text-accent-light">{sessionRejectedCount}</span>
-              <span className="text-white/40">skipped</span>
-            </span>
+            <span style={{ color: 'rgba(255,255,255,0.25)' }}>·</span>
+            <span style={{ fontWeight: 600, color: '#c084fc' }}>{sessionRejectedCount}</span>
+            <span style={{ color: 'rgba(255,255,255,0.5)' }}>skipped</span>
           </>
         )}
       </div>
