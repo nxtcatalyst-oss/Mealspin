@@ -14,14 +14,14 @@ interface HistoryPanelProps {
 type Tab = '7d' | '21d' | 'all'
 
 const TABS: { id: Tab; label: string }[] = [
-  { id: '7d',  label: 'This Week' },
+  { id: '7d', label: 'This Week' },
   { id: '21d', label: '3 Weeks' },
   { id: 'all', label: 'All Time' },
 ]
 
 function filterHistory(history: SelectionHistory[], tab: Tab): SelectionHistory[] {
   const now = new Date()
-  if (tab === '7d')  return history.filter((h) => new Date(h.selectedAt) >= subDays(now, 7))
+  if (tab === '7d') return history.filter((h) => new Date(h.selectedAt) >= subDays(now, 7))
   if (tab === '21d') return history.filter((h) => new Date(h.selectedAt) >= subDays(now, 21))
   return history
 }
@@ -42,10 +42,9 @@ export default function HistoryPanel({ history, onRefresh, loading }: HistoryPan
         style={{ borderColor: 'rgba(245,158,11,0.1)' }}
       >
         <div className="flex items-center gap-2">
-          <Clock size={14} style={{ color: '#f59e0b' }} />
+          <Clock size={14} className="text-gold" />
           <span
-            className="text-xs font-bold uppercase tracking-wider"
-            style={{ color: '#f59e0b' }}
+            className="text-xs font-bold font-display uppercase tracking-wider text-gold drop-shadow-sm"
           >
             Recent Selections
           </span>
@@ -54,10 +53,10 @@ export default function HistoryPanel({ history, onRefresh, loading }: HistoryPan
           onClick={onRefresh}
           disabled={loading}
           className="p-1.5 rounded-lg transition-colors duration-150"
-          style={{ color: loading ? '#f59e0b' : 'rgba(255,255,255,0.25)' }}
+          style={{ color: loading ? '#FB8500' : 'rgba(255,255,255,0.25)' }}
           title="Refresh"
         >
-          <RefreshCw size={13} className={loading ? 'animate-spin' : ''} />
+          <RefreshCw size={13} className={loading ? 'animate-spin' : 'hover:text-gold transition-colors'} />
         </button>
       </div>
 
@@ -67,10 +66,10 @@ export default function HistoryPanel({ history, onRefresh, loading }: HistoryPan
           <button
             key={tab.id}
             onClick={() => { setActiveTab(tab.id); setExpanded(false) }}
-            className="flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150"
+            className="flex-1 py-1.5 rounded-lg text-xs font-display tracking-wide font-medium transition-all duration-300"
             style={
               activeTab === tab.id
-                ? { background: 'rgba(245,158,11,0.14)', border: '1px solid rgba(245,158,11,0.3)', color: '#fbbf24' }
+                ? { background: 'rgba(251,133,0,0.1)', border: '1px solid rgba(251,133,0,0.2)', color: '#FFB703' }
                 : { background: 'transparent', border: '1px solid transparent', color: 'rgba(255,255,255,0.3)' }
             }
           >
@@ -106,8 +105,8 @@ export default function HistoryPanel({ history, onRefresh, loading }: HistoryPan
                   <div
                     style={{
                       width: 7, height: 7, borderRadius: '50%', flexShrink: 0,
-                      background: i === 0 ? '#f59e0b' : 'rgba(255,255,255,0.15)',
-                      boxShadow: i === 0 ? '0 0 6px rgba(245,158,11,0.6)' : 'none',
+                      background: i === 0 ? '#FB8500' : 'rgba(255,255,255,0.15)',
+                      boxShadow: i === 0 ? '0 0 8px rgba(251,133,0,0.5)' : 'none',
                     }}
                   />
 
@@ -115,8 +114,8 @@ export default function HistoryPanel({ history, onRefresh, loading }: HistoryPan
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-2">
                       <span
-                        className="text-sm font-semibold truncate"
-                        style={{ color: i === 0 ? '#fbbf24' : 'rgba(255,255,255,0.75)' }}
+                        className="text-sm font-semibold truncate font-display tracking-wide"
+                        style={{ color: i === 0 ? '#FFB703' : 'rgba(255,255,255,0.75)' }}
                       >
                         {item.meal?.name ?? 'Unknown'}
                       </span>

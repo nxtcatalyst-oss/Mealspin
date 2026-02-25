@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
-import { Dices, ChefHat } from 'lucide-react'
+import { Dices, ChefHat, Loader2 } from 'lucide-react'
 import type { Meal, SelectionHistory, EligibilityResult, AppSettings, NoEligibleMealsResponse } from '@/types'
 import SpinWheel, { SpinWheelRef } from '@/components/SpinWheel'
 import MealReveal from '@/components/MealReveal'
@@ -178,10 +178,10 @@ export default function HomePage() {
 
   if (initialLoading) {
     return (
-      <div className="flex items-center justify-center" style={{ minHeight: '80dvh' }}>
-        <div className="flex flex-col items-center gap-3">
-          <span className="text-5xl" style={{ animation: 'float-up 2s ease-in-out infinite' }}>🎰</span>
-          <p className="text-sm" style={{ color: 'rgba(255,255,255,0.3)' }}>Loading...</p>
+      <div className="flex items-center justify-center min-h-[80dvh]">
+        <div className="flex flex-col items-center gap-4">
+          <Loader2 className="w-10 h-10 text-gold-dark animate-spin" />
+          <p className="text-sm tracking-widest uppercase text-white/40 font-display text-glow">Initializing system...</p>
         </div>
       </div>
     )
@@ -205,21 +205,14 @@ export default function HomePage() {
         {/* Title */}
         <div className="text-center mb-6">
           <p
-            className="text-sm font-semibold tracking-[0.2em] uppercase mb-2"
-            style={{ color: 'rgba(245,158,11,0.6)' }}
+            className="text-xs font-semibold tracking-[0.3em] font-display uppercase mb-2"
+            style={{ color: 'rgba(251,133,0,0.6)' }}
           >
-            What&apos;s for dinner?
+            System Active
           </p>
           <h1
-            className="font-black leading-tight"
-            style={{
-              fontFamily: 'var(--font-playfair)',
-              fontSize: 'clamp(2.25rem, 9vw, 3.5rem)',
-              background: 'linear-gradient(135deg, #fef3c7 0%, #fbbf24 45%, #f59e0b 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-            }}
+            className="font-black leading-tight font-display tracking-tight text-gradient-gold drop-shadow-lg"
+            style={{ fontSize: 'clamp(2.5rem, 10vw, 4rem)' }}
           >
             Spin to Decide
           </h1>
@@ -282,8 +275,8 @@ export default function HomePage() {
                   {' · '}
                   <button
                     onClick={handleResetSession}
-                    className="underline"
-                    style={{ color: 'rgba(245,158,11,0.6)' }}
+                    className="underline hover:text-gold transition-colors"
+                    style={{ color: 'rgba(251,133,0,0.6)' }}
                   >
                     reset
                   </button>
@@ -294,17 +287,17 @@ export default function HomePage() {
         )}
 
         {/* Manage meals link */}
-        <div className="flex justify-center mt-6 mb-6">
+        <div className="flex justify-center mt-8 mb-6">
           <Link
             href="/meals"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-200"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs tracking-wide uppercase font-display font-medium transition-all duration-300 hover:bg-white/10"
             style={{
-              background: 'rgba(255,255,255,0.04)',
-              border: '1px solid rgba(255,255,255,0.09)',
-              color: 'rgba(255,255,255,0.4)',
+              background: 'rgba(255,255,255,0.03)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              color: 'rgba(255,255,255,0.5)',
             }}
           >
-            <ChefHat size={15} />
+            <ChefHat size={16} />
             Manage meals
           </Link>
         </div>

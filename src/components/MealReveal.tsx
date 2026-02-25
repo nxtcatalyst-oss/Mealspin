@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Check, RotateCcw } from 'lucide-react'
+import { Check, RotateCcw, Sparkles } from 'lucide-react'
 import type { Meal } from '@/types'
 
 interface MealRevealProps {
@@ -15,10 +15,10 @@ interface MealRevealProps {
 function fireConfetti() {
   import('canvas-confetti').then((module) => {
     const confetti = module.default
-    confetti({ particleCount: 130, spread: 80, origin: { y: 0.55 }, colors: ['#f59e0b','#fbbf24','#a855f7','#c084fc','#ffffff'] })
+    confetti({ particleCount: 130, spread: 80, origin: { y: 0.55 }, colors: ['#f59e0b', '#fbbf24', '#a855f7', '#c084fc', '#ffffff'] })
     setTimeout(() => {
-      confetti({ particleCount: 50, angle: 60,  spread: 55, origin: { x: 0, y: 0.6 }, colors: ['#f59e0b','#ffffff'] })
-      confetti({ particleCount: 50, angle: 120, spread: 55, origin: { x: 1, y: 0.6 }, colors: ['#a855f7','#ffffff'] })
+      confetti({ particleCount: 50, angle: 60, spread: 55, origin: { x: 0, y: 0.6 }, colors: ['#f59e0b', '#ffffff'] })
+      confetti({ particleCount: 50, angle: 120, spread: 55, origin: { x: 1, y: 0.6 }, colors: ['#a855f7', '#ffffff'] })
     }, 220)
   })
 }
@@ -57,7 +57,7 @@ export default function MealReveal({ meal, onConfirm, onReject, loading }: MealR
             initial={{ y: 80, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 60, opacity: 0 }}
-            transition={{ type: 'spring', damping: 24, stiffness: 280 }}
+            transition={{ type: 'spring', damping: 25, stiffness: 260 }}
             className="relative w-full sm:max-w-sm"
             style={{ maxWidth: '100vw' }}
           >
@@ -81,30 +81,25 @@ export default function MealReveal({ meal, onConfirm, onReject, loading }: MealR
               <div className="px-7 pb-8 pt-5 text-center">
                 {/* Label */}
                 <p
-                  className="text-xs font-bold tracking-[0.28em] uppercase mb-3"
-                  style={{ color: 'rgba(245,158,11,0.6)' }}
+                  className="text-xs font-bold tracking-[0.28em] font-display uppercase mb-3"
+                  style={{ color: 'rgba(251,133,0,0.6)' }}
                 >
                   Tonight&apos;s Meal
                 </p>
 
                 {/* Slot icon */}
                 <div
-                  className="text-4xl mb-4"
-                  style={{ animation: 'float-up 2.5s ease-in-out infinite' }}
+                  className="flex justify-center mb-4"
+                  style={{ animation: 'float 4s ease-in-out infinite' }}
                 >
-                  🎰
+                  <Sparkles size={36} className="text-gold" />
                 </div>
 
                 {/* Meal name */}
                 <h2
-                  className="font-black mb-3 leading-tight"
+                  className="font-black mb-3 leading-tight font-display tracking-tight text-gradient-gold drop-shadow-md"
                   style={{
-                    fontFamily: 'var(--font-playfair)',
                     fontSize: 'clamp(1.75rem, 6vw, 2.5rem)',
-                    background: 'linear-gradient(135deg, #fef3c7 0%, #fbbf24 50%, #f59e0b 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
                   }}
                 >
                   {meal.name}
@@ -147,30 +142,30 @@ export default function MealReveal({ meal, onConfirm, onReject, loading }: MealR
                   <button
                     onClick={handleConfirm}
                     disabled={loading}
-                    className="w-full flex items-center justify-center gap-2 font-bold rounded-2xl transition-all duration-200"
+                    className="w-full flex items-center justify-center gap-2 font-display font-medium uppercase tracking-widest rounded-2xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
                     style={{
-                      background: 'linear-gradient(135deg, #d97706, #f59e0b, #fbbf24)',
-                      color: '#05050f',
+                      background: 'linear-gradient(135deg, #FB8500, #A35200)',
+                      color: '#020205',
                       padding: '1rem',
-                      fontSize: '1rem',
-                      letterSpacing: '0.04em',
-                      boxShadow: '0 4px 24px rgba(245,158,11,0.4)',
+                      fontSize: '0.85rem',
+                      boxShadow: '0 8px 24px rgba(251,133,0,0.3)',
                       minHeight: 54,
                     }}
                   >
-                    <Check size={18} strokeWidth={3} />
+                    <Check size={18} strokeWidth={2.5} />
                     Confirm — Let&apos;s Eat!
                   </button>
 
                   <button
                     onClick={onReject}
                     disabled={loading}
-                    className="w-full flex items-center justify-center gap-2 rounded-2xl font-semibold transition-all duration-200"
+                    className="w-full flex items-center justify-center gap-2 rounded-2xl font-display uppercase tracking-widest transition-all duration-300 hover:bg-white/5 active:scale-[0.98]"
                     style={{
-                      background: 'rgba(255,255,255,0.05)',
-                      border: '1px solid rgba(255,255,255,0.1)',
-                      color: 'rgba(255,255,255,0.55)',
+                      background: 'rgba(255,255,255,0.03)',
+                      border: '1px solid rgba(255,255,255,0.08)',
+                      color: 'rgba(255,255,255,0.4)',
                       padding: '0.875rem',
+                      fontSize: '0.8rem',
                       minHeight: 50,
                     }}
                   >

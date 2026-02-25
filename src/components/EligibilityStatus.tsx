@@ -37,33 +37,33 @@ export default function EligibilityStatus({
     <div className="relative flex items-center gap-3 flex-wrap justify-center">
       {/* Status pill */}
       <div
-        className="flex items-center gap-2 px-4 py-1.5 rounded-full text-sm"
+        className="flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-display tracking-wide uppercase font-medium"
         style={{
-          background: 'rgba(255,255,255,0.04)',
-          border: '1px solid rgba(255,255,255,0.08)',
+          background: 'rgba(255,255,255,0.03)',
+          border: '1px solid rgba(255,255,255,0.06)',
         }}
       >
         <span>
-          <span className="font-bold text-emerald-400">{eligibleCount}</span>
-          <span className="text-gray-500"> eligible</span>
+          <span className="font-bold tracking-wider text-green-400/80">{eligibleCount}</span>
+          <span className="text-white/40"> eligible</span>
         </span>
 
         {blockedCount > 0 && (
           <>
-            <span className="text-gray-700">·</span>
+            <span className="text-white/10">·</span>
             <span title={`${blockedCount} meals blocked – selected within last ${cooldownDays} days`}>
-              <span className="font-semibold text-amber-600">{blockedCount}</span>
-              <span className="text-gray-600"> on cooldown</span>
+              <span className="font-semibold text-gold">{blockedCount}</span>
+              <span className="text-white/40"> cooldown</span>
             </span>
           </>
         )}
 
         {sessionRejectedCount > 0 && (
           <>
-            <span className="text-gray-700">·</span>
+            <span className="text-white/10">·</span>
             <span>
-              <span className="font-semibold text-purple-400">{sessionRejectedCount}</span>
-              <span className="text-gray-600"> rejected</span>
+              <span className="font-semibold text-accent-light">{sessionRejectedCount}</span>
+              <span className="text-white/40"> rejected</span>
             </span>
           </>
         )}
@@ -74,7 +74,7 @@ export default function EligibilityStatus({
         <div className="relative">
           <button
             onClick={() => setShowSettings(!showSettings)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs text-gray-500 hover:text-amber-400 hover:bg-amber-400/10 transition-all duration-200"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-display tracking-widest uppercase font-medium text-white/40 hover:text-gold hover:bg-gold/10 transition-all duration-300"
             style={{ border: '1px solid rgba(255,255,255,0.06)' }}
           >
             <Settings size={12} />
@@ -86,9 +86,10 @@ export default function EligibilityStatus({
             <div
               className="absolute bottom-full mb-2 left-0 rounded-xl overflow-hidden z-20 min-w-[160px]"
               style={{
-                background: '#1a1a38',
-                border: '1px solid rgba(245,158,11,0.25)',
-                boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
+                background: '#0D0D14',
+                border: '1px solid rgba(255,255,255,0.06)',
+                boxShadow: '0 8px 32px rgba(0,0,0,0.8), 0 0 0 1px rgba(251,133,0,0.1)',
+                backdropFilter: 'blur(16px)',
               }}
             >
               <div className="px-3 py-2 border-b" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
@@ -101,10 +102,10 @@ export default function EligibilityStatus({
                     onCooldownChange(days)
                     setShowSettings(false)
                   }}
-                  className="w-full flex items-center justify-between px-3 py-2 text-sm transition-colors duration-150"
+                  className="w-full flex items-center justify-between px-3 py-2 text-xs font-display transition-colors duration-150"
                   style={{
-                    background: days === cooldownDays ? 'rgba(245,158,11,0.1)' : 'transparent',
-                    color: days === cooldownDays ? '#fbbf24' : 'rgba(255,255,255,0.6)',
+                    background: days === cooldownDays ? 'rgba(251,133,0,0.1)' : 'transparent',
+                    color: days === cooldownDays ? '#FFB703' : 'rgba(255,255,255,0.5)',
                   }}
                   onMouseEnter={(e) => {
                     if (days !== cooldownDays) e.currentTarget.style.background = 'rgba(255,255,255,0.05)'
@@ -114,11 +115,11 @@ export default function EligibilityStatus({
                   }}
                 >
                   <span>{days} days</span>
-                  {days === cooldownDays && <span className="text-amber-400 text-xs">✓</span>}
+                  {days === cooldownDays && <span className="text-gold text-xs">✓</span>}
                 </button>
               ))}
               <div className="px-3 py-2 border-t" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
-                <p className="text-xs text-gray-600 flex items-start gap-1">
+                <p className="text-[10px] text-white/30 flex items-start gap-1 leading-tight">
                   <Info size={10} className="mt-0.5 flex-shrink-0" />
                   Meals selected within this window are excluded
                 </p>
