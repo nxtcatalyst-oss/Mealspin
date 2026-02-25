@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Meal {
+  id          String    @id @default(cuid())
+  name        String
+  category    String?
+  description String?
+  tags        String?   // JSON array stored as string e.g. '["quick","comfort"]'
+  enabled     Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+
+  selections  SelectionHistory[]
+
+  @@map("meals")
+}
+
+model SelectionHistory {
+  id         String   @id @default(cuid())
+  mealId     String
+  selectedAt DateTime @default(now())
+  confirmed  Boolean  @default(true)
+  selectedBy String?
+  notes      String?
+
+  meal       Meal     @relation(fields: [mealId], references: [id])
+
+  @@map("selection_history")
+}
+
+model AppSettings {
+  id           String   @id @default("singleton")
+  cooldownDays Int      @default(21)
+  updatedAt    DateTime @updatedAt
+
+  @@map("app_settings")
+}
