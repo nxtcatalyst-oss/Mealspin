@@ -111,10 +111,13 @@ export default function HomePage() {
         setSpinning(false)
         return
       }
-      setSelectedMeal(data.selectedMeal)
+      // Store meal without revealing yet — wait for wheel to finish
+      const pendingMeal: Meal = data.selectedMeal
       setEligibilityResult(data.eligibilityResult)
       await wheelRef.current?.spin(SPIN_DURATION_MS)
-      await new Promise((r) => setTimeout(r, 200))
+      await new Promise((r) => setTimeout(r, 300))
+      // Reveal after wheel stops
+      setSelectedMeal(pendingMeal)
     } catch {
       console.error('Spin failed')
       setSpinning(false)
@@ -200,18 +203,18 @@ export default function HomePage() {
         style={{ paddingTop: '1.5rem' }}
       >
         {/* Title */}
-        <div className="text-center mb-5">
+        <div className="text-center mb-6">
           <p
-            className="text-xs font-bold tracking-[0.25em] uppercase mb-2"
-            style={{ color: 'rgba(245,158,11,0.55)' }}
+            className="text-sm font-semibold tracking-[0.2em] uppercase mb-2"
+            style={{ color: 'rgba(245,158,11,0.6)' }}
           >
             What&apos;s for dinner?
           </p>
           <h1
-            className="font-black leading-none mb-1"
+            className="font-black leading-tight"
             style={{
               fontFamily: 'var(--font-playfair)',
-              fontSize: 'clamp(2rem, 8vw, 3.5rem)',
+              fontSize: 'clamp(2.25rem, 9vw, 3.5rem)',
               background: 'linear-gradient(135deg, #fef3c7 0%, #fbbf24 45%, #f59e0b 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
@@ -262,7 +265,7 @@ export default function HomePage() {
                 )}
                 <button
                   onClick={handleSpin}
-                  disabled={spinning}
+                  disabled={spinning || !isEligible}
                   className="btn-spin"
                 >
                   <Dices

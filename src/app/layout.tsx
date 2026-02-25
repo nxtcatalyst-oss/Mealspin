@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
 import Link from 'next/link'
+import NavLinks from '@/components/NavLinks'
 import './globals.css'
 
 const inter = Inter({
@@ -50,12 +51,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             paddingTop: 'env(safe-area-inset-top)',
           }}
         >
-          <div className="max-w-lg mx-auto px-4 h-12 sm:h-14 flex items-center justify-between">
+          <div className="max-w-lg mx-auto px-4 h-14 flex items-center justify-between">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2">
-              <span className="text-xl sm:text-2xl">🎰</span>
+            <Link href="/" className="flex items-center gap-2.5">
+              <span className="text-2xl">🎰</span>
               <span
-                className="text-lg sm:text-xl font-black tracking-tight"
+                className="text-xl font-black tracking-tight"
                 style={{
                   fontFamily: 'var(--font-playfair)',
                   background: 'linear-gradient(135deg, #fef3c7, #fbbf24, #d97706)',
@@ -68,27 +69,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </span>
             </Link>
 
-            {/* Nav */}
-            <nav className="flex items-center gap-1">
-              <Link
-                href="/"
-                className="px-3 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-150"
-                style={{ color: 'rgba(255,255,255,0.5)' }}
-              >
-                Spin
-              </Link>
-              <Link
-                href="/meals"
-                className="px-3 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-150"
-                style={{
-                  background: 'rgba(245,158,11,0.12)',
-                  border: '1px solid rgba(245,158,11,0.25)',
-                  color: '#fbbf24',
-                }}
-              >
-                Meals
-              </Link>
-            </nav>
+            {/* Nav — client component so it can highlight the active link */}
+            <NavLinks />
           </div>
         </header>
 

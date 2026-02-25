@@ -35,6 +35,10 @@ export default function MealManager({ initialMeals }: MealManagerProps) {
     try {
       const res = await fetch('/api/meals?includeDisabled=true')
       const data = await res.json()
+      if (!res.ok || !Array.isArray(data)) {
+        showToast('Failed to load meals', 'error')
+        return
+      }
       setMeals(data)
     } catch {
       showToast('Failed to load meals', 'error')
@@ -206,7 +210,7 @@ export default function MealManager({ initialMeals }: MealManagerProps) {
             return (
               <div
                 key={meal.id}
-                className="group flex items-start gap-4 px-4 py-3.5 rounded-2xl transition-all duration-200"
+                className="group flex items-start gap-3 px-4 py-4 rounded-2xl transition-all duration-200"
                 style={{
                   background: meal.enabled ? '#161638' : 'rgba(15,15,42,0.5)',
                   border: meal.enabled
@@ -232,7 +236,7 @@ export default function MealManager({ initialMeals }: MealManagerProps) {
                 {/* Info */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-baseline gap-2 flex-wrap">
-                    <span className="font-semibold text-sm" style={{ color: meal.enabled ? '#e2e2f0' : '#6b7280' }}>
+                    <span className="font-semibold text-base" style={{ color: meal.enabled ? '#e2e2f0' : '#6b7280' }}>
                       {meal.name}
                     </span>
                     {meal.category && (
@@ -261,24 +265,24 @@ export default function MealManager({ initialMeals }: MealManagerProps) {
                 </div>
 
                 {/* Actions */}
-                <div className="flex items-center gap-1 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                <div className="flex items-center gap-1 flex-shrink-0">
                   <button
                     onClick={() => { setEditingMeal(meal); setShowForm(false) }}
-                    className="p-1.5 rounded-lg text-gray-600 hover:text-amber-400 hover:bg-amber-400/10 transition-all duration-150"
+                    className="p-2 rounded-xl text-gray-500 hover:text-amber-400 hover:bg-amber-400/10 active:bg-amber-400/15 transition-all duration-150"
                     title="Edit meal"
                   >
-                    <Edit3 size={14} />
+                    <Edit3 size={16} />
                   </button>
                   <button
                     onClick={() => handleDelete(meal)}
                     disabled={deletingId === meal.id}
-                    className="p-1.5 rounded-lg text-gray-600 hover:text-red-400 hover:bg-red-400/10 transition-all duration-150"
+                    className="p-2 rounded-xl text-gray-500 hover:text-red-400 hover:bg-red-400/10 active:bg-red-400/15 transition-all duration-150"
                     title="Delete meal"
                   >
                     {deletingId === meal.id ? (
-                      <Loader2 size={14} className="animate-spin" />
+                      <Loader2 size={16} className="animate-spin" />
                     ) : (
-                      <Trash2 size={14} />
+                      <Trash2 size={16} />
                     )}
                   </button>
                 </div>
