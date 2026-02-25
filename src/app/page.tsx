@@ -205,12 +205,12 @@ export default function HomePage() {
         style={{ paddingTop: 'max(1.5rem, env(safe-area-inset-top))', minHeight: '100dvh' }}
       >
         {/* Title */}
-        <div className="mb-4">
+        <div className="mb-4 text-center">
           <h1
-            className="font-black leading-tight font-display tracking-tight text-gradient-gold text-center"
-            style={{ fontSize: 'clamp(1.875rem, 8vw, 3.25rem)' }}
+            className="font-black leading-tight font-display tracking-tight"
+            style={{ fontSize: 'clamp(1.875rem, 8vw, 3.25rem)', display: 'block', width: '100%' }}
           >
-            Spin to Decide
+            <span className="text-gradient-gold">Spin to Decide</span>
           </h1>
         </div>
 
@@ -237,6 +237,7 @@ export default function HomePage() {
             <div
               ref={wheelContainerRef}
               className="flex-1 flex items-center justify-center min-h-[220px] mt-4 w-full"
+              style={{ maxHeight: '420px' }}
             >
               {wheelSize > 0 && (
                 <SpinWheel
@@ -248,7 +249,7 @@ export default function HomePage() {
             </div>
 
             {/* Gap between wheel and button */}
-            <div className="h-20" />
+            <div className="h-24" />
 
             {/* Spin button */}
             <div className="flex flex-col items-center gap-4 mb-4">
