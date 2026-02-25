@@ -18,6 +18,16 @@
   --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
 
+button {
+  background-color: transparent;
+  background-image: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
 * {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
@@ -52,16 +62,29 @@ body::before {
   z-index: 0;
 }
 
-body > * {
+body>* {
   position: relative;
   z-index: 1;
 }
 
 /* Custom scrollbar */
-::-webkit-scrollbar { width: 4px; height: 4px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(255, 183, 3, 0.2); border-radius: 2px; }
-::-webkit-scrollbar-thumb:hover { background: var(--gold-dark); }
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 183, 3, 0.2);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-dark);
+}
 
 ::selection {
   background: rgba(255, 183, 3, 0.25);
@@ -98,7 +121,7 @@ body > * {
   border-radius: 1.5rem;
   backdrop-filter: blur(32px);
   -webkit-backdrop-filter: blur(32px);
-  box-shadow: 
+  box-shadow:
     inset 0 1px 1px rgba(255, 255, 255, 0.05),
     0 12px 40px rgba(0, 0, 0, 0.6);
   transition: border-color 0.3s ease;
@@ -120,16 +143,13 @@ body > * {
 
 .wheel-glow {
   filter:
-    drop-shadow(0 0 16px rgba(251, 133, 0, 0.15))
-    drop-shadow(0 0 48px rgba(114, 9, 183, 0.1));
+    drop-shadow(0 0 16px rgba(251, 133, 0, 0.15)) drop-shadow(0 0 48px rgba(114, 9, 183, 0.1));
   transition: filter 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .wheel-glow.spinning {
   filter:
-    drop-shadow(0 0 32px rgba(251, 133, 0, 0.4))
-    drop-shadow(0 0 80px rgba(157, 78, 221, 0.3))
-    drop-shadow(0 0 120px rgba(251, 133, 0, 0.15));
+    drop-shadow(0 0 32px rgba(251, 133, 0, 0.4)) drop-shadow(0 0 80px rgba(157, 78, 221, 0.3)) drop-shadow(0 0 120px rgba(251, 133, 0, 0.15));
 }
 
 /* ─── Spin Button (Cinematic & Tactile) ─── */
@@ -189,7 +209,7 @@ body > * {
   animation: none;
   background: linear-gradient(135deg, #2A1F10, #1A1208);
   color: #5A5A6A;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
@@ -202,37 +222,81 @@ body > * {
   animation: pulse-ring 2.5s cubic-bezier(0.2, 0, 0.2, 1) infinite;
   pointer-events: none;
 }
-.pulse-ring-2 { animation-delay: 1.25s; }
+
+.pulse-ring-2 {
+  animation-delay: 1.25s;
+}
 
 @keyframes pulse-ring {
-  0% { transform: scale(1); opacity: 0.8; border-width: 2px; }
-  100% { transform: scale(1.4); opacity: 0; border-width: 0px; }
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+    border-width: 2px;
+  }
+
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+    border-width: 0px;
+  }
 }
 
 @keyframes shimmer-btn {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 @keyframes float-up {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-4px); }
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
 }
 
 @keyframes slide-up {
-  from { transform: translateY(24px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 @keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes spin-idle {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* ─── Input Styles ─── */
@@ -248,14 +312,16 @@ body > * {
   font-size: 1rem;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.input-dark::placeholder { color: rgba(255, 255, 255, 0.3); }
+.input-dark::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
 
 .input-dark:focus {
   border-color: rgba(255, 183, 3, 0.5);
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2), 0 0 0 4px rgba(255, 183, 3, 0.1);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), 0 0 0 4px rgba(255, 183, 3, 0.1);
   background: rgba(15, 15, 22, 0.8);
 }
 
@@ -285,7 +351,13 @@ body > * {
   height: 28px;
   flex-shrink: 0;
 }
-.toggle-switch input { opacity: 0; width: 0; height: 0; }
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
 .toggle-slider {
   position: absolute;
   cursor: pointer;
@@ -294,8 +366,9 @@ body > * {
   border-radius: 28px;
   transition: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
 }
+
 .toggle-slider::before {
   position: absolute;
   content: '';
@@ -306,13 +379,15 @@ body > * {
   background: #fff;
   border-radius: 50%;
   transition: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
-input:checked + .toggle-slider {
+
+input:checked+.toggle-slider {
   background: linear-gradient(135deg, #FFB703, #FB8500);
   border-color: rgba(255, 183, 3, 0.4);
 }
-input:checked + .toggle-slider::before {
+
+input:checked+.toggle-slider::before {
   transform: translateX(22px);
 }
 

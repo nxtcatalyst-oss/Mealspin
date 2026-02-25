@@ -37,7 +37,9 @@ export default function HomePage() {
     if (!el) return
     const observer = new ResizeObserver(([entry]) => {
       const w = entry.contentRect.width
-      setWheelSize(Math.min(Math.floor(w), 400))
+      const h = entry.contentRect.height
+      // Bound the wheel by both width and height so it doesn't smash into the button
+      setWheelSize(Math.min(Math.floor(w), Math.floor(h), 400))
     })
     observer.observe(el)
     return () => observer.disconnect()
@@ -199,20 +201,20 @@ export default function HomePage() {
       />
 
       <div
-        className="max-w-lg mx-auto px-4 pb-8"
-        style={{ paddingTop: '1.5rem' }}
+        className="flex-1 w-full max-w-lg mx-auto self-center px-4 pb-8 flex flex-col"
+        style={{ paddingTop: '1.5rem', minHeight: '100dvh' }}
       >
         {/* Title */}
         <div className="text-center mb-6">
           <p
-            className="text-xs font-semibold tracking-[0.3em] font-display uppercase mb-2"
+            className="text-sm font-semibold tracking-[0.3em] font-display uppercase mb-2"
             style={{ color: 'rgba(251,133,0,0.6)' }}
           >
             System Active
           </p>
           <h1
             className="font-black leading-tight font-display tracking-tight text-gradient-gold drop-shadow-lg"
-            style={{ fontSize: 'clamp(2.5rem, 10vw, 4rem)' }}
+            style={{ fontSize: 'clamp(2.75rem, 11vw, 4.5rem)' }}
           >
             Spin to Decide
           </h1>
@@ -228,25 +230,30 @@ export default function HomePage() {
           />
         ) : (
           <>
-            {/* Wheel — fills container width, capped at 400px */}
-            <div ref={wheelContainerRef} className="w-full flex items-center justify-center mb-6">
-              {wheelSize > 0 && (
-                <SpinWheel
-                  ref={wheelRef}
-                  spinning={spinning}
-                  size={wheelSize}
-                />
-              )}
-            </div>
-
-            {/* Status + Spin */}
-            <div className="flex flex-col items-center gap-8">
+            <div className="mb-6">
               <EligibilityStatus
                 eligibilityResult={eligibilityResult}
                 sessionRejectedCount={sessionRejectedIds.length}
                 cooldownDays={effectiveCooldown}
                 onCooldownChange={handleCooldownChange}
               />
+            </div>
+
+            {/* Wheel — perfectly centered by flex-1 parent, with forced height constraint */}
+            <div className="flex-1 flex flex-col items-center justify-center min-h-[200px] my-8 w-full">
+              <div ref={wheelContainerRef} className="w-full h-full flex items-center justify-center">
+                {wheelSize > 0 && (
+                  <SpinWheel
+                    ref={wheelRef}
+                    spinning={spinning}
+                    size={wheelSize}
+                  />
+                )}
+              </div>
+            </div>
+
+            {/* Spin button */}
+            <div className="flex flex-col items-center gap-6 mt-12 mb-4">
 
               {/* Spin button */}
               <div className="relative flex items-center justify-center px-4">
@@ -284,7 +291,7 @@ export default function HomePage() {
         <div className="flex justify-center mt-8 mb-6">
           <Link
             href="/meals"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs tracking-wide uppercase font-display font-medium transition-all duration-300 hover:bg-white/10"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm tracking-wide uppercase font-display font-medium transition-all duration-300 hover:bg-white/10"
             style={{
               background: 'rgba(255,255,255,0.03)',
               border: '1px solid rgba(255,255,255,0.08)',
