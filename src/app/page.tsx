@@ -38,8 +38,8 @@ export default function HomePage() {
     const observer = new ResizeObserver(([entry]) => {
       const w = entry.contentRect.width
       const h = entry.contentRect.height
-      // Subtract 26px for pointer + 40px to prevent glow from bleeding into button
-      setWheelSize(Math.min(Math.floor(w), Math.floor(h) - 66, 400))
+      // Container is fixed 360px tall; subtract 30px for pointer clearance
+      setWheelSize(Math.min(Math.floor(w), Math.floor(h) - 30, 380))
     })
     observer.observe(el)
     return () => observer.disconnect()
@@ -201,14 +201,22 @@ export default function HomePage() {
       />
 
       <div
-        className="flex-1 w-full max-w-lg mx-auto px-4 pb-8 flex flex-col"
-        style={{ paddingTop: 'max(1.5rem, env(safe-area-inset-top))', minHeight: '100dvh' }}
+        style={{
+          width: '100%',
+          maxWidth: '512px',
+          margin: '0 auto',
+          padding: '0 16px',
+          paddingTop: 'max(2rem, env(safe-area-inset-top))',
+          paddingBottom: 'max(2rem, env(safe-area-inset-bottom))',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
       >
         {/* Title */}
-        <div className="mb-4 text-center">
+        <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
           <h1
-            className="font-black leading-tight font-display tracking-tight"
-            style={{ fontSize: 'clamp(1.875rem, 8vw, 3.25rem)', display: 'block', width: '100%' }}
+            className="font-black font-display tracking-tight"
+            style={{ fontSize: 'clamp(2rem, 9vw, 3.5rem)', textAlign: 'center', lineHeight: 1.1 }}
           >
             <span className="text-gradient-gold">Spin to Decide</span>
           </h1>
@@ -224,7 +232,7 @@ export default function HomePage() {
           />
         ) : (
           <>
-            <div className="mb-6">
+            <div style={{ marginBottom: '1.5rem' }}>
               <EligibilityStatus
                 eligibilityResult={eligibilityResult}
                 sessionRejectedCount={sessionRejectedIds.length}
@@ -233,11 +241,16 @@ export default function HomePage() {
               />
             </div>
 
-            {/* Wheel */}
+            {/* Wheel — fixed height so it never grows into the button */}
             <div
               ref={wheelContainerRef}
-              className="flex-1 flex items-center justify-center min-h-[220px] mt-4 w-full"
-              style={{ maxHeight: '420px' }}
+              style={{
+                width: '100%',
+                height: '360px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
             >
               {wheelSize > 0 && (
                 <SpinWheel
@@ -248,35 +261,28 @@ export default function HomePage() {
               )}
             </div>
 
-            {/* Gap between wheel and button */}
-            <div className="h-24" />
-
-            {/* Spin button */}
-            <div className="flex flex-col items-center gap-4 mb-4">
-
-              {/* Spin button */}
-              <div className="relative flex items-center justify-center px-4">
-                <button
-                  onClick={handleSpin}
-                  disabled={spinning || !isEligible}
-                  className="btn-spin w-full max-w-[280px]"
-                >
-                  <Dices
-                    size={20}
-                    style={{ animation: spinning ? 'spin-idle 0.5s linear infinite' : 'none' }}
-                  />
-                  {spinning ? 'Spinning…' : 'Spin the Wheel'}
-                </button>
-              </div>
+            {/* Spin button — 56px top gap keeps it clear of wheel glow */}
+            <div style={{ marginTop: '56px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
+              <button
+                onClick={handleSpin}
+                disabled={spinning || !isEligible}
+                className="btn-spin"
+                style={{ width: '100%', maxWidth: '320px' }}
+              >
+                <Dices
+                  size={20}
+                  style={{ animation: spinning ? 'spin-idle 0.5s linear infinite' : 'none' }}
+                />
+                {spinning ? 'Spinning…' : 'Spin the Wheel'}
+              </button>
 
               {sessionRejectedIds.length > 0 && (
-                <p className="text-xs text-center" style={{ color: 'rgba(255,255,255,0.3)' }}>
+                <p style={{ fontSize: '0.75rem', textAlign: 'center', color: 'rgba(255,255,255,0.3)' }}>
                   {sessionRejectedIds.length} skipped this session
                   {' · '}
                   <button
                     onClick={handleResetSession}
-                    className="underline hover:text-gold transition-colors"
-                    style={{ color: 'rgba(251,133,0,0.6)' }}
+                    style={{ color: 'rgba(251,133,0,0.6)', textDecoration: 'underline' }}
                   >
                     reset
                   </button>
@@ -286,18 +292,26 @@ export default function HomePage() {
           </>
         )}
 
-        {/* Manage meals link */}
-        <div className="flex justify-center mt-8 mb-6">
+        {/* Manage meals link — large touch target */}
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2.5rem', marginBottom: '1.5rem' }}>
           <Link
             href="/meals"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm tracking-wide uppercase font-display font-medium transition-all duration-300 hover:bg-white/10"
+            className="font-display font-medium transition-all duration-300"
             style={{
-              background: 'rgba(255,255,255,0.03)',
-              border: '1px solid rgba(255,255,255,0.08)',
-              color: 'rgba(255,255,255,0.5)',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '14px 28px',
+              borderRadius: '9999px',
+              fontSize: '0.875rem',
+              letterSpacing: '0.05em',
+              textTransform: 'uppercase',
+              background: 'rgba(255,255,255,0.04)',
+              border: '1px solid rgba(255,255,255,0.1)',
+              color: 'rgba(255,255,255,0.6)',
             }}
           >
-            <ChefHat size={16} />
+            <ChefHat size={17} />
             Manage meals
           </Link>
         </div>

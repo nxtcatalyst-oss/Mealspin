@@ -105,12 +105,12 @@ export default function HistoryPanel({ history, onRefresh, loading }: HistoryPan
             {history.length > 1 && (
               <button
                 onClick={() => setExpanded(!expanded)}
-                className="w-full flex items-center justify-center gap-2 mt-2 py-3 rounded-xl text-sm font-bold tracking-wider uppercase font-display transition-colors duration-150 hover:bg-white/5"
-                style={{ color: 'rgba(255,255,255,0.25)' }}
+                className="w-full flex items-center justify-center gap-2 mt-2 rounded-xl font-bold tracking-wider uppercase font-display transition-colors duration-150 hover:bg-white/5"
+                style={{ color: 'rgba(255,255,255,0.35)', fontSize: '0.8rem', padding: '14px 0', minHeight: '48px' }}
               >
                 {expanded
-                  ? <><ChevronUp size={13} /> Show less</>
-                  : <><ChevronDown size={13} /> View past weeks</>
+                  ? <><ChevronUp size={14} /> Show less</>
+                  : <><ChevronDown size={14} /> View past weeks</>
                 }
               </button>
             )}
