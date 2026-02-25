@@ -229,7 +229,7 @@ export default function HomePage() {
         ) : (
           <>
             {/* Wheel — fills container width, capped at 400px */}
-            <div ref={wheelContainerRef} className="w-full flex justify-center mb-4">
+            <div ref={wheelContainerRef} className="w-full flex items-center justify-center mb-6">
               {wheelSize > 0 && (
                 <SpinWheel
                   ref={wheelRef}
@@ -240,7 +240,7 @@ export default function HomePage() {
             </div>
 
             {/* Status + Spin */}
-            <div className="flex flex-col items-center gap-4">
+            <div className="flex flex-col items-center gap-8">
               <EligibilityStatus
                 eligibilityResult={eligibilityResult}
                 sessionRejectedCount={sessionRejectedIds.length}
@@ -248,18 +248,12 @@ export default function HomePage() {
                 onCooldownChange={handleCooldownChange}
               />
 
-              {/* Spin button with pulse rings */}
-              <div className="relative flex items-center justify-center">
-                {!spinning && isEligible && (
-                  <>
-                    <div className="pulse-ring" />
-                    <div className="pulse-ring pulse-ring-2" />
-                  </>
-                )}
+              {/* Spin button */}
+              <div className="relative flex items-center justify-center px-4">
                 <button
                   onClick={handleSpin}
                   disabled={spinning || !isEligible}
-                  className="btn-spin"
+                  className="btn-spin w-full max-w-[280px]"
                 >
                   <Dices
                     size={20}
