@@ -38,8 +38,8 @@ export default function HomePage() {
     const observer = new ResizeObserver(([entry]) => {
       const w = entry.contentRect.width
       const h = entry.contentRect.height
-      // Bound the wheel by both width and height so it doesn't smash into the button
-      setWheelSize(Math.min(Math.floor(w), Math.floor(h), 400))
+      // Subtract 26px for the pointer arrow that extends above the wheel SVG
+      setWheelSize(Math.min(Math.floor(w), Math.floor(h) - 26, 400))
     })
     observer.observe(el)
     return () => observer.disconnect()
@@ -202,19 +202,19 @@ export default function HomePage() {
 
       <div
         className="flex-1 w-full max-w-lg mx-auto self-center px-4 pb-8 flex flex-col"
-        style={{ paddingTop: '1.5rem', minHeight: '100dvh' }}
+        style={{ paddingTop: 'max(1.5rem, env(safe-area-inset-top))', minHeight: '100dvh' }}
       >
         {/* Title */}
-        <div className="text-center mb-6">
+        <div className="text-center mb-4">
           <p
-            className="text-sm font-semibold tracking-[0.3em] font-display uppercase mb-2"
-            style={{ color: 'rgba(251,133,0,0.6)' }}
+            className="text-xs font-semibold tracking-[0.25em] font-display uppercase mb-2"
+            style={{ color: 'rgba(251,133,0,0.55)' }}
           >
-            System Active
+            What&apos;s for dinner?
           </p>
           <h1
-            className="font-black leading-tight font-display tracking-tight text-gradient-gold drop-shadow-lg"
-            style={{ fontSize: 'clamp(2.75rem, 11vw, 4.5rem)' }}
+            className="font-black leading-tight font-display tracking-tight text-gradient-gold"
+            style={{ fontSize: 'clamp(1.875rem, 8vw, 3.25rem)' }}
           >
             Spin to Decide
           </h1>
@@ -239,8 +239,8 @@ export default function HomePage() {
               />
             </div>
 
-            {/* Wheel — perfectly centered by flex-1 parent, with forced height constraint */}
-            <div className="flex-1 flex flex-col items-center justify-center min-h-[200px] my-8 w-full">
+            {/* Wheel */}
+            <div className="flex-1 flex flex-col items-center justify-center min-h-[220px] mt-4 mb-0 w-full">
               <div ref={wheelContainerRef} className="w-full h-full flex items-center justify-center">
                 {wheelSize > 0 && (
                   <SpinWheel
@@ -252,8 +252,11 @@ export default function HomePage() {
               </div>
             </div>
 
+            {/* Gap between wheel and button */}
+            <div className="h-10" />
+
             {/* Spin button */}
-            <div className="flex flex-col items-center gap-6 mt-12 mb-4">
+            <div className="flex flex-col items-center gap-4 mb-4">
 
               {/* Spin button */}
               <div className="relative flex items-center justify-center px-4">

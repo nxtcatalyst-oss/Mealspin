@@ -37,33 +37,33 @@ export default function EligibilityStatus({
     <div className="relative flex flex-col sm:flex-row items-center gap-4 justify-center">
       {/* Status pill */}
       <div
-        className="flex items-center gap-2 px-5 py-2 rounded-full text-sm font-display tracking-wide uppercase font-medium"
+        className="flex items-center gap-2.5 px-4 py-1.5 rounded-full text-sm font-display font-medium"
         style={{
-          background: 'rgba(255,255,255,0.03)',
-          border: '1px solid rgba(255,255,255,0.06)',
+          background: 'rgba(255,255,255,0.04)',
+          border: '1px solid rgba(255,255,255,0.08)',
         }}
       >
-        <span>
-          <span className="font-bold tracking-wider text-green-400/80 text-base">{eligibleCount}</span>
-          <span className="text-white/40"> eligible</span>
+        <span className="flex items-center gap-1">
+          <span className="font-bold text-green-400/90">{eligibleCount}</span>
+          <span className="text-white/40">eligible</span>
         </span>
 
         {blockedCount > 0 && (
           <>
-            <span className="text-white/10">·</span>
-            <span title={`${blockedCount} meals blocked – selected within last ${cooldownDays} days`}>
-              <span className="font-semibold text-gold">{blockedCount}</span>
-              <span className="text-white/40"> cooldown</span>
+            <span className="text-white/15">·</span>
+            <span className="flex items-center gap-1" title={`${blockedCount} meals on cooldown (${cooldownDays}d)`}>
+              <span className="font-semibold text-gold-300">{blockedCount}</span>
+              <span className="text-white/40">cooldown</span>
             </span>
           </>
         )}
 
         {sessionRejectedCount > 0 && (
           <>
-            <span className="text-white/10">·</span>
-            <span>
+            <span className="text-white/15">·</span>
+            <span className="flex items-center gap-1">
               <span className="font-semibold text-accent-light">{sessionRejectedCount}</span>
-              <span className="text-white/40"> rejected</span>
+              <span className="text-white/40">skipped</span>
             </span>
           </>
         )}
